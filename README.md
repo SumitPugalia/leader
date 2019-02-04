@@ -1,8 +1,16 @@
 # Leader
 
-Create new project using `mix new leader --sup`
-Write a worker
-Add `Ecto and Postgres` in mix.exs
-Add repo.ex and configuration as needed
-Add the schema
-Build the migration using `mix ecto.gen.migration`
+`mix deps.get`
+`mix ecto.create`
+`mix ecto.migrate`
+
+Start the Nodes Each with different name
+	Terminal One -> 	`iex --sname node1 -S mix`
+	Terminal Two -> 	`iex --sname node2 -S mix`
+	Terminal Three -> `iex --sname node3 -S mix`
+  And So On ....
+
+See the logs what are the messages being sent and received in all the nodes
+
+Close master Node (ctrl + C + C ) and see other node taking it over.
+The closed node is deleted from DB too.

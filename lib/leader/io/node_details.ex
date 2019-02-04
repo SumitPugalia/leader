@@ -30,7 +30,6 @@ defmodule Leader.IO.NodeDetails do
     query
     # change to one
     |> Repo.all()
-    |> List.first()
   end
 
   def get_nodes_by_greater_than_id(id) do
@@ -56,8 +55,22 @@ defmodule Leader.IO.NodeDetails do
     |> Repo.one()
   end
 
+  def delete_all([]) do
+    :ok
+  end
+
+  def delete_all(inactive_nodes) do
+    query =
+      from(n in NodeDetails,
+        where: n.name in ^inactive_nodes
+      )
+
+    query
+    |> Repo.delete_all()
+  end
+
   def update(node_name, %{is_master: is_master}) do
-    query = from nd in NodeDetails, where: nd.name == ^node_name
+    query = from(nd in NodeDetails, where: nd.name == ^node_name)
 
     case Repo.update_all(query, set: [is_master: is_master]) do
       {1, nil} ->

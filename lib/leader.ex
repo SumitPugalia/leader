@@ -1,2 +1,0 @@
-defmodule Leader do
-end
